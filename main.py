@@ -19,8 +19,10 @@ def extract_features(filename):
 
 def main(filenames):
     with Recorder('output.tfrecords') as recorder:
+        recorder.feature_extractor = extract_features
+
         for filename in filenames:
-            recorder.creat_example(extract_features(filename))
+            recorder.create_example(filename)
 
 
 if __name__ == '__main__':

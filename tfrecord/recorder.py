@@ -7,8 +7,14 @@ class Recorder:
         self.path = path
         self.writer = None
 
-    def creat_example(self, features):
-        fs = {k: v.instance for k, v in features.items()}
+    def feature_extractor(self, filename):
+        raise NotImplementedError(
+            'You have to provide your own `feature_extractor()` '
+            'through Recorder.feature_extractor = your_function.')
+
+    def create_example(self, filename):
+        result = self.feature_extractor(filename)
+        fs = {k: v.instance for k, v in result.items()}
         example = tf.train.Example(features=tf.train.Features(feature=fs))
         self.writer.write(example.SerializeToString())
 
