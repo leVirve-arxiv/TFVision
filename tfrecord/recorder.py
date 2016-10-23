@@ -7,8 +7,10 @@ class Recorder:
         self.path = path
         self.writer = None
 
-    def write(self, example):
-        self.writer.write(example.serialize())
+    def creat_example(self, features):
+        fs = {k: v.instance for k, v in features.items()}
+        example = tf.train.Example(features=tf.train.Features(feature=fs))
+        self.writer.write(example.SerializeToString())
 
     def __enter__(self):
         self.writer = tf.python_io.TFRecordWriter(self.path)

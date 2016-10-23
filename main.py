@@ -1,28 +1,26 @@
 import glob
 import scipy.misc
 
-from tfrecord import Recorder, Example, Feature
+from tfrecord import Recorder, Feature
 
 
-def creat_example(filename):
+def extract_features(filename):
     image = scipy.misc.imread(filename)
     raw = image.tostring()
     rows, cols, channels = image.shape
 
-    features = {
+    return {
         'height': Feature(int64_list=cols),
         'width': Feature(int64_list=rows),
         'channel': Feature(int64_list=channels),
         'image_raw': Feature(bytes_list=raw)
     }
 
-    return Example(features)
-
 
 def main(filenames):
     with Recorder('output.tfrecords') as recorder:
-        for filename in filenames[:100]:
-            recorder.write(creat_example(filename))
+        for filename in filenames:
+            recorder.creat_example(extract_features(filename))
 
 
 if __name__ == '__main__':
