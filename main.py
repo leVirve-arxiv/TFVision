@@ -1,9 +1,7 @@
 import glob
 import scipy.misc
 
-from tfrecord.record import Record
-from tfrecord.example import Example
-from tfrecord.feature import Feature
+from tfrecord import Recorder, Example, Feature
 
 
 def creat_example(filename):
@@ -22,9 +20,9 @@ def creat_example(filename):
 
 
 def main(filenames):
-    with Record('output.tfrecords') as record:
-        for filename in filenames:
-            record.write(creat_example(filename))
+    with Recorder('output.tfrecords') as recorder:
+        for filename in filenames[:100]:
+            recorder.write(creat_example(filename))
 
 
 if __name__ == '__main__':

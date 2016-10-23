@@ -1,7 +1,7 @@
 import tensorflow as tf
 
 
-class Record:
+class Recorder:
 
     def __init__(self, path):
         self.path = path
